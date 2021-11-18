@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: rgb(60, 60, 60);
 }
 
 a {
@@ -13,4 +14,12 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.card {
+  cursor: pointer;
+  transition: .5s;
+}
+.card:hover {
+  transform: scale(1.1);
 }
