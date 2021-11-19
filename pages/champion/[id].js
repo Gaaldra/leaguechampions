@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export async function getStaticPaths() {
   const paths = [];
   const champions = require("../../public/champions.json");
@@ -28,8 +30,30 @@ export default function Champion(props) {
       <h1>Campeão: {props.champion.name}</h1>
       <p>Historia</p>
       <p>{props.champion.lore}</p>
-      <h5>Habilidades</h5>
-      <p>{props.champion.spells[0].description}</p>
+      <table className="table table-dark table-striped text-white">
+        <thead>
+          <tr className="table-dark">
+            <th colSpan="2" className="text-center">
+              Habilidades
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.champion.spells.map((item, index) => (
+            <tr key={item.id}>
+              <th scope="row" className="table-dark">
+                <Image
+                  src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/${props.champion.spells[index].id}.png`}
+                  width={64}
+                  height={64}
+                  alt={props.champion.spells[3].id}
+                ></Image>
+              </th>
+              <td>{props.champion.spells[index].description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

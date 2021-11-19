@@ -16,10 +16,18 @@ a {
   box-sizing: border-box;
 }
 
-.card {
+.card-champion {
   cursor: pointer;
   transition: .5s;
 }
-.card:hover {
+.card-champion:hover {
   transform: scale(1.1);
+}
+
+physicaldamage {
+  color: orange;
+}
+
+status {
+  color: rgb(206, 5, 206);
 }

@@ -30,9 +30,9 @@ export default function Home() {
       </Head>
       <div className="container-fluid pt-3">
         <div className="row d-flex justify-content-center pb-3">
-          {champions.map((champion, value) => (
-            <Link key={value} href={`/champion/${champion.key}`} passHref>
-              <div className="card col-5 col-md-2 bg-dark text-white p-0 mt-2 mb-3 mx-2">
+          {champions.map((champion, index) => (
+            <Link key={index} href={`/champion/${champion.key}`} passHref>
+              <div className="card card-champion col-5 col-md-2 bg-dark text-white p-0 mt-2 mb-3 mx-2">
                 <Image
                   className="card-img"
                   src={require(`../public/champion/${champion.key}_0.jpg`)}
