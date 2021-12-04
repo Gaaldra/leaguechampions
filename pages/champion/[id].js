@@ -26,34 +26,41 @@ export async function getStaticProps(context) {
 
 export default function Champion(props) {
   return (
-    <div className="container-fluid text-white">
+    <div className="container-fluid text-white ">
       <h1>Campeão: {props.champion.name}</h1>
       <p>Historia</p>
       <p>{props.champion.lore}</p>
-      <table className="table table-dark table-striped text-white">
-        <thead>
-          <tr className="table-dark">
-            <th colSpan="2" className="text-center">
-              Habilidades
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.champion.spells.map((item, index) => (
-            <tr key={item.id}>
-              <th scope="row" className="table-dark">
-                <Image
-                  src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/${props.champion.spells[index].id}.png`}
-                  width={64}
-                  height={64}
-                  alt={props.champion.spells[3].id}
-                ></Image>
+      <div className="container-fluid justify-content-center d-flex">
+        <table
+          className="table table-dark text-white"
+          style={{ width: "90vw" }}
+        >
+          <thead>
+            <tr className="table-dark">
+              <th colSpan="2" className="text-center">
+                Habilidades
               </th>
-              <td>{props.champion.spells[index].description}</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {props.champion.spells.map((item, index) => (
+              <tr key={item.id}>
+                <td className="table-dark align-middle">
+                  <Image
+                    className="align-self-center rounded shadow"
+                    src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/${props.champion.spells[index].id}.png`}
+                    width={64}
+                    height={64}
+                    alt={props.champion.spells[3].id}
+                    layout="fixed"
+                  ></Image>
+                </td>
+                <td>{props.champion.spells[index].description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
