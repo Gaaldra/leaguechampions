@@ -44,7 +44,7 @@ export default function Home() {
                   height: "var(--image)",
                   backgroundImage: `url("./images/centered/${champion.key}_0.jpg")`,
                   backgroundAttachment: "local",
-                  backgroundSize: `${(imageSize * 16) / 9}px ${imageSize}px`,
+                  backgroundSize: `cover`,
                   backgroundPosition: "center"
                 }}
               >
