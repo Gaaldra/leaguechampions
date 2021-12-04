@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
         <meta httpEquiv="Cache-control" content="public" />
       </Head>
       <header className="navbar navbar-expand-lg text-white bg-dark">
-        <div className="container-fluid">
+        <div className="container-fluid" style={{ width: "85vw" }}>
           <Link href="/">
             <a className="navbar-brand">League Champions</a>
           </Link>

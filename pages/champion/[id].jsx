@@ -26,16 +26,18 @@ export async function getStaticProps(context) {
 
 export default function Champion(props) {
   return (
-    <div className="container-fluid text-white">
-      <div className="container-fluid justify-content-center d-flex flex-column">
-        <h1>Campeão: {props.champion.name}</h1>
-        <p>Historia</p>
-        <p>{props.champion.lore}</p>
+    <div className="container-fluid text-white" style={{ width: "85vw" }}>
+      <div className="container-fluid justify-content-center d-flex flex-column pt-3">
+        <div className="mb-3">
+          <h1 className="text-center">{props.champion.name}</h1>
+          <h2 className="text-center">{props.champion.title}</h2>
+        </div>
+        <div className="mb-3">
+          <p>{props.champion.lore}</p>
+        </div>
       </div>
       <div className="container-fluid justify-content-center d-flex">
-        <table
-          className="table table-dark text-white"
-        >
+        <table className="table table-dark text-white">
           <thead>
             <tr className="table-dark">
               <th colSpan="2" className="text-center">
@@ -56,7 +58,20 @@ export default function Champion(props) {
                     layout="fixed"
                   ></Image>
                 </td>
-                <td>{String(props.champion.spells[index].description).replace(/<.+?>/gm, " ")}</td>
+                <td>
+                  <tr className="bolder" style={{ fontWeight: "bolder" }}>
+                    {String(props.champion.spells[index].name).replace(
+                      /<.+?>/gm,
+                      " "
+                    )}
+                  </tr>
+                  <tr>
+                    {String(props.champion.spells[index].description).replace(
+                      /<.+?>/gm,
+                      " "
+                    )}
+                  </tr>
+                </td>
               </tr>
             ))}
           </tbody>
