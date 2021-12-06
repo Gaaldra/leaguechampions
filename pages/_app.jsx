@@ -12,7 +12,6 @@ function MyApp({ Component, pageProps }) {
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossOrigin="anonymous"
         />
-        <meta httpEquiv="Cache-control" content="public" />
       </Head>
       <header className="navbar navbar-expand-lg text-white bg-dark">
         <div className="container-fluid" style={{ width: "85vw" }}>
