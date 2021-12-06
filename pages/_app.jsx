@@ -22,6 +22,8 @@ function MyApp({ Component, pageProps }) {
         </div>
       </header>
       <Component {...pageProps} />
+      {process.env.VERCEL_ENV === 'production' ? <script data-ad-client="ca-pub-6071071126763143" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> : null }
+      
     </>
   );
 }
