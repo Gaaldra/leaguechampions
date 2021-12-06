@@ -1,5 +1,3 @@
-@import url(//db.onlinewebfonts.com/c/12420e8c141ca7c3dff41de2d59df13e?family=BeaufortforLOL-Bold);
-
 html,
 body {
   padding: 0;
@@ -95,7 +93,6 @@ a {
   text-align: center;
   text-transform: uppercase;
   transition: 0.4s;
-  font-family: Beaufort for LOL, Arial, sans-serif;
   font-weight: 700;
   font-size: 11px;
   color: #937341;
