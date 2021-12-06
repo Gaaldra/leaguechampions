@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Spells from "../../components/Spells";
 
 export async function getStaticPaths() {
   const paths = [];
@@ -24,58 +24,61 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function Champion(props) {
+export default function Champion({ champion }) {
   return (
     <div className="container-fluid text-white" style={{ width: "85vw" }}>
       <div className="container-fluid justify-content-center d-flex flex-column pt-3">
         <div className="mb-3">
-          <h1 className="text-center">{props.champion.name}</h1>
-          <h2 className="text-center">{props.champion.title}</h2>
+          <h1 className="text-center">{champion.name}</h1>
+          <h2 className="text-center">{champion.title}</h2>
         </div>
-        <div className="mb-3">
-          <p>{props.champion.lore}</p>
+        <div className="mb-3 text" style={{ textAlign: "justify" }}>
+          <p>{champion.lore}</p>
         </div>
       </div>
-      <div className="container-fluid justify-content-center d-flex">
-        <table className="table table-dark text-white">
-          <thead>
-            <tr className="table-dark">
-              <th colSpan="2" className="text-center">
-                Habilidades
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.champion.spells.map((item, index) => (
-              <tr key={item.id}>
-                <td className="table-dark align-middle">
-                  <Image
-                    className="align-self-center rounded shadow"
-                    src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/${props.champion.spells[index].id}.png`}
-                    width={64}
-                    height={64}
-                    alt={props.champion.spells[3].id}
-                    layout="fixed"
-                  ></Image>
-                </td>
-                <td>
-                  <tr className="bolder" style={{ fontWeight: "bolder" }}>
-                    {String(props.champion.spells[index].name).replace(
-                      /<.+?>/gm,
-                      " "
-                    )}
-                  </tr>
-                  <tr>
-                    {String(props.champion.spells[index].description).replace(
-                      /<.+?>/gm,
-                      " "
-                    )}
-                  </tr>
+      <div className="container-fluid justify-content-center d-flex flex-column">
+        <div>
+          <table className="table table-dark text-white table-bordered">
+            <thead>
+              <tr className="text-center">
+                <td className="bolder" colSpan={2}>
+                  Dicas para {champion.name}
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="10vw" style={{ color: "#0f0" }}>
+                  Aliado
+                </td>
+                <td>
+                  {champion.allytips.map((element, index) => {
+                    return (
+                      <h6 key={index} style={{ color: "#0f0" }}>
+                        {element}
+                      </h6>
+                    );
+                  })}
+                </td>
+              </tr>
+              <tr>
+                <td width="10vw" style={{ color: "#F33" }}>
+                  Inimigo
+                </td>
+                <td>
+                  {champion.enemytips.map((element, index) => {
+                    return (
+                      <h6 key={index} style={{ color: "#F33" }}>
+                        {element}
+                      </h6>
+                    );
+                  })}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <Spells champion={champion} />
       </div>
     </div>
   );
