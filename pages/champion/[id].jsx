@@ -16,12 +16,23 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const id = context.params.id;
-  const { data } = require(`../../public/champion_json/${id}.json`);
+  const versions = await fetch("https://ddragon.leagueoflegends.com/api/versions.json")
+  const [atualVersion] = await versions.json()
+  const championResponse = await fetch(`http://ddragon.leagueoflegends.com/cdn/${atualVersion}/data/pt_BR/champion/${id}.json`)
+  const championData = await championResponse.json()
+
+  
+  if(!atualVersion || !championData) {
+    return {
+      notFound: true
+    }
+  }
 
   return {
     props: {
-      champion: data[id]
+      champion: championData.data[id],
     },
+    revalidate: 86400
   };
 }
 
@@ -30,6 +41,7 @@ export default function Champion({ champion }) {
     <>
       <Head>
         <title>{`${champion.name} - Lore, Dicas e Habilidades`}</title>
+        <meta name="description" content={champion.blurb}></meta>
       </Head>
       <div className="container-fluid text-white" style={{ width: "85vw" }}>
         <div className="container-fluid justify-content-center d-flex flex-column pt-3">

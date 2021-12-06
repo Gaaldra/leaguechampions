@@ -32,52 +32,50 @@ export default function Spells({ champion }) {
           </td>
         </tr>
         {champion.spells.map((item, index) => (
-          <>
-            <tr key={index}>
-              <td className="table-dark align-middle">
-                <Image
-                  className="align-self-center rounded shadow"
-                  src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/${champion.spells[index].id}.png`}
-                  width={64}
-                  height={64}
-                  alt={champion.spells[index].id}
-                  layout="fixed"
-                ></Image>
-              </td>
-              <td>
-                <h5 className="bolder">
-                  {champion.spells[index].name}
-                </h5>
-                {champion.spells[index].cooldownBurn != "0" ? (
-                  <h6 className="fs-6 text-muted">
-                    Tempo de Recarga (Segundos):{" "}
-                    {champion.spells[index].cooldownBurn}
-                  </h6>
-                ) : (
-                  <></>
-                )}
-                <h6 className="text-muted">
-                  Custo:{" "}
-                  {String(champion.spells[index].resource).replace(
-                    /{{(.*?)}}/g,
-                    (x) => {
-                      if (x === "{{ cost }}")
-                        return champion.spells[index].costBurn;
-                      if (x === "{{ abilityresourcename }}")
-                        return champion.partype;
-                      return "?";
-                    }
-                  )}
+          <tr key={index}>
+            <td className="table-dark align-middle">
+              <Image
+                className="align-self-center rounded shadow"
+                src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/${champion.spells[index].id}.png`}
+                width={64}
+                height={64}
+                alt={champion.spells[index].id}
+                layout="fixed"
+              ></Image>
+            </td>
+            <td>
+              <h5 className="bolder">
+                {champion.spells[index].name}
+              </h5>
+              {champion.spells[index].cooldownBurn != "0" ? (
+                <h6 className="fs-6 text-muted">
+                  Tempo de Recarga (Segundos):{" "}
+                  {champion.spells[index].cooldownBurn}
                 </h6>
-                <p>
-                  {String(champion.spells[index].description).replace(
-                    /<.+?>/gm,
-                    " "
-                  )}
-                </p>
-              </td>
-            </tr>
-          </>
+              ) : (
+                <></>
+              )}
+              <h6 className="text-muted">
+                Custo:{" "}
+                {String(champion.spells[index].resource).replace(
+                  /{{(.*?)}}/g,
+                  (x) => {
+                    if (x === "{{ cost }}")
+                      return champion.spells[index].costBurn;
+                    if (x === "{{ abilityresourcename }}")
+                      return champion.partype;
+                    return "?";
+                  }
+                )}
+              </h6>
+              <p>
+                {String(champion.spells[index].description).replace(
+                  /<.+?>/gm,
+                  " "
+                )}
+              </p>
+            </td>
+          </tr>
         ))}
       </tbody>
     </table>
