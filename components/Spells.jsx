@@ -33,7 +33,7 @@ export default function Spells({ champion }) {
         </tr>
         {champion.spells.map((item, index) => (
           <>
-            <tr key={item.id}>
+            <tr key={index}>
               <td className="table-dark align-middle">
                 <Image
                   className="align-self-center rounded shadow"
