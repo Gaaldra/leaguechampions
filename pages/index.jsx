@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import Champions from "../public/champions.json";
 
@@ -31,8 +30,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container-fluid pt-3">
-        <div className="container text-center text-white ">
-          <h1>Campeões</h1>
+        <div className="container text-center text-white">
+          <h1 className="text-uppercase">Campeões</h1>
         </div>
         <div className="row d-flex justify-content-center pb-3 mt-5">
           {champions.map((champion, index) => (
@@ -45,17 +44,9 @@ export default function Home() {
                   backgroundImage: `url("./images/centered/${champion.key}_0.jpg")`,
                   backgroundAttachment: "local",
                   backgroundSize: `cover`,
-                  backgroundPosition: "center"
+                  backgroundPosition: "center",
                 }}
               >
-                {/* <Image
-                  className="card-img"
-                  src={require(`../public/images/centered/${champion.key}_0.jpg`)}
-                  alt={champion.key}
-                  height={1280}
-                  width={720}
-                  objectFit="cover"
-                /> */}
                 <div className="card-img-overlay d-flex px-0 pb-0">
                   <div
                     className="card-body align-self-end d-flex justify-content-center bg-dark"
@@ -64,9 +55,7 @@ export default function Home() {
                     <h5 className="card-title fs-6 name_champion">
                       {champion.name}
                     </h5>
-                    <div className="explore_action">
-                      Explore
-                    </div>
+                    <div className="explore_action">Explore</div>
                   </div>
                 </div>
               </div>
