@@ -102,3 +102,11 @@ a {
   font-size: 14px;
   letter-spacing: 2px;
 }
+
+.bolder {
+  font-weight: bold;
+}
+
+.text-muted {
+  margin: 0;
+}
