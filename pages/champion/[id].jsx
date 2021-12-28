@@ -1,5 +1,7 @@
 import Spells from "../../components/Spells";
-import Head from 'next/head'
+import Head from "next/head";
+import style from "../../styles/champion.module.css";
+import Image from "next/image";
 
 export async function getStaticPaths() {
   const paths = [];
@@ -21,8 +23,8 @@ export async function getStaticProps(context) {
   const championResponse = await fetch(`http://ddragon.leagueoflegends.com/cdn/${atualVersion}/data/pt_BR/champion/${id}.json`)
   const championData = await championResponse.json()
 
-  
-  if(!atualVersion || !championData) {
+
+  if (!atualVersion || !championData) {
     return {
       notFound: true
     }
@@ -43,12 +45,20 @@ export default function Champion({ champion }) {
         <title>{`${champion.name} - Lore, Dicas e Habilidades`}</title>
         <meta name="description" content={champion.blurb}></meta>
       </Head>
-      <div className="container-fluid text-white" style={{ width: "85vw" }}>
+      <main className={style.main_content}>
+        <div className={style.background_title}>
+          <Image
+          src={`http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg`}
+          alt="SplashScreen"
+          width={1280}
+          height={720}
+             />
+            <div className={style.page_title}>
+              <h1>{champion.name}</h1>
+              <h2>{champion.title}</h2>
+            </div>
+        </div>
         <div className="container-fluid justify-content-center d-flex flex-column pt-3">
-          <div className="mb-3">
-            <h1 className="text-center">{champion.name}</h1>
-            <h2 className="text-center">{champion.title}</h2>
-          </div>
           <div className="mb-3 text" style={{ textAlign: "justify" }}>
             <p>{champion.lore}</p>
           </div>
@@ -97,7 +107,7 @@ export default function Champion({ champion }) {
           </div>
           <Spells champion={champion} />
         </div>
-      </div>
+      </main>
     </>
   );
 }

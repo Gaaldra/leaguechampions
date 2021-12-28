@@ -23,12 +23,8 @@ export default function Spells({ champion }) {
             ></Image>
           </td>
           <td>
-            <tr>
-              <h5 className="bolder">{champion.passive.name}<span className="text-muted"> - Passiva</span></h5>
-            </tr>
-            <tr>
-              {String(champion.passive.description).replace(/<.+?>/gm, " ")}
-            </tr>
+            <h5 className="bolder">{champion.passive.name}<span className="text-muted"> - Passiva</span></h5>
+            <p>{String(champion.passive.description).replace(/<.+?>/gm, " ")}</p>
           </td>
         </tr>
         {champion.spells.map((item, index) => (

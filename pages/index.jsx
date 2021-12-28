@@ -1,84 +1,111 @@
-import Head from "next/head";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import Champions from "../public/champions.json";
+import Head from "next/head"
+import Link from "next/link"
+import { Component } from "react"
+import Search from "../components/Search"
+import style from "../styles/home.module.css"
 
-export default function Home() {
-  const [busca, setBusca] = useState('')
-  const [champions, setChampions] = useState(Object.keys(Champions.data).map((key, value) => {
-    const champion = {
-      key: key,
-      name: Champions.data[key].name,
+export async function getStaticProps() {
+  const championsResponse = await fetch(`${process.env.VERCEL_URL}/api/championsList`)
+  let championsData = await championsResponse.json()
+
+  if (!championsData) {
+    return {
+      notFound: true
     }
-    return champion
-  }));
-  const [viewChampions, setViewChampions] = useState(champions)
-
-  champions.sort((a, b) => {
-    if (a.name > b.name) return 1;
-    if (a.name < b.name) return -1;
-    return 0;
-  });
-
-  function handleChange(e) {
-    setBusca(e.target.value)
   }
 
-  function buscar() {
-    setViewChampions(champions.filter(valor => String(valor.name).toLowerCase().includes(busca.toLowerCase())))
-    console.log(champions.filter(valor => String(valor.name).toLowerCase().includes(busca.toLowerCase())))
+  championsData = championsData.map((champion) => {
+    return { ...champion, view: true }
+  })
+
+  return {
+    props: {
+      ChampionsData: championsData
+    },
+    revalidate: 86400
+  }
+}
+
+export default class Home extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      champions: props.ChampionsData,
+      busca: ""
+    }
+
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  const imageSize = 423;
+  componentDidMount() {
+    console.log(this.state.champions)
+    const orderedList = this.state.champions.sort((a, b) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    })
+    this.setState({ champions: orderedList })
+  }
 
-  return (
-    <>
-      <Head>
-        <title>League Champions</title>
-        <meta
-          name="description"
-          content="Informações dos campeões de League of Legends"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="container-fluid pt-3">
-        <div className="container text-center text-white">
-          <h1 className="text-uppercase">Campeões</h1>
+  handleChange(e) {
+    const newValue = e.target.value
+    this.setState({ busca: newValue })
+    const newList = this.state.champions.map((value) => {
+      const newItem = value
+      if (!String(value.name).toLowerCase().includes(newValue.toLowerCase())) {
+        newItem.view = false
+        return newItem
+      }
+      newItem.view = true
+      return newItem
+    })
+    this.setState({ champions: newList })
+    console.log(this.state.champions)
+  }
+
+  render() {
+    return (
+      <>
+        <Head>
+          <title>League Champions</title>
+          <meta
+            name="description"
+            content="Informações dos campeões de League of Legends"
+          />
+        </Head>
+        <div className={style.container_search}>
+          <Search onChange={this.handleChange} value={this.state.busca} />
         </div>
-        <div className="input-group my-3" style={{ width: "87vw", margin: "auto" }}>
-          <input type="text" className="form-control" placeholder="Buscar..." aria-label="Procurar campeão" aria-describedby="button-addon1" onChange={handleChange} value={busca} />
-          <button className="btn btn-outline-secondary" type="button" id="button-addon1" onClick={buscar}>Procurar</button>
-        </div>
-        <div className="row d-flex justify-content-center pb-3 mt-5">
-          {viewChampions.map((champion, index) => (
-            <Link key={index} href={`/champion/${champion.key}`} passHref>
-              <div
-                className="card card-champion col-5 col-md-2 text-white p-0 mt-2 mb-3 mx-2"
-                style={{
-                  "--image": `${imageSize}px`,
-                  height: "var(--image)",
-                  backgroundImage: `url("./images/centered/${champion.key}_0.jpg")`,
-                  backgroundAttachment: "local",
-                  backgroundSize: `cover`,
-                  backgroundPosition: "center",
-                }}
-              >
-                <div className="card-img-overlay d-flex px-0 pb-0">
-                  <div
-                    className="card-body align-self-end d-flex justify-content-center bg-dark"
-                    style={{ "--bs-bg-opacity": ".9" }}
-                  >
-                    <h5 className="card-title fs-6 name_champion">
-                      {champion.name}
-                    </h5>
-                    <div className="explore_action">Explore</div>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </>
-  );
+        <main className={style.main}>
+          <div className={style.title}>
+            <h1>Campeões</h1>
+          </div>
+
+          <section id="champions_list" className={style.section_champions}>
+            <div className={style.collections}>
+              {this.state.champions.map((champion, index) => {
+                return (
+                  <Link key={index} href={`/champion/${champion.key}`} passHref>
+                    <div
+                      className={style.card}
+                      style={{
+                        backgroundImage: `url("./images/centered/${champion.key}_0.jpg")`,
+                        display: `${champion.view ? 'block' : 'none'}`
+                      }}>
+                      <div className={`${style.face} ${style.face_front}`}>
+                        <div className={style.card_body}>
+                          <p>{champion.name}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          </section>
+        </main>
+      </>
+    )
+  }
 }

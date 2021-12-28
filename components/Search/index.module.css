@@ -1,0 +1,19 @@
+.input_text {
+  width: 100%;
+  max-width: 1280px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem auto;
+  background-color: inherit;
+  color: #c59f59;
+  letter-spacing: 1px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.input_text::placeholder {
+  color: #866e40;
+}
+
+.input_text:focus {
+  outline: none;
+}
