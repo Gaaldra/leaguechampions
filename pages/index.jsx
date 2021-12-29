@@ -5,8 +5,17 @@ import Search from "../components/Search"
 import style from "../styles/home.module.css"
 
 export async function getStaticProps() {
-  const championsResponse = await fetch(`${process.env.VERCEL_URL}/api/championsList`)
-  let championsData = await championsResponse.json()
+  const versions = await fetch("https://ddragon.leagueoflegends.com/api/versions.json")
+  const [atualVersion] = await versions.json()
+  const championsResponse = await fetch(`http://ddragon.leagueoflegends.com/cdn/${atualVersion}/data/pt_BR/champion.json`)
+  const championsData = await championsResponse.json()
+  let justNamesAndKeys = Object.keys(championsData.data).map((key, value) => {
+    const champion = {
+      key: key,
+      name: championsData.data[key].name,
+    }
+    return champion
+  })
 
   if (!championsData) {
     return {
@@ -14,13 +23,13 @@ export async function getStaticProps() {
     }
   }
 
-  championsData = championsData.map((champion) => {
+  justNamesAndKeys = justNamesAndKeys.map((champion) => {
     return { ...champion, view: true }
   })
 
   return {
     props: {
-      ChampionsData: championsData
+      ChampionsData: justNamesAndKeys
     },
     revalidate: 86400
   }
