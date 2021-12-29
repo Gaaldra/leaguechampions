@@ -16,7 +16,7 @@ export default function Header() {
     </div>
     <nav className={style.container_nav_list}>
       <Link href="/" passHref>
-        <p className={style.navbar_link}>Champions</p>
+        <p className={style.navbar_link}>Campeões</p>
       </Link>
       <Link href="/" passHref>
         <p className={style.navbar_link}>Itens</p>
