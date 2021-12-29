@@ -15,7 +15,7 @@ export default function Header() {
       </Link>
     </div>
     <nav className={style.container_nav_list}>
-      <Link href="/about" passHref>
+      <Link href="/" passHref>
         <p className={style.navbar_link}>Champions</p>
       </Link>
       <Link href="/" passHref>
