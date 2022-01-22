@@ -5,14 +5,17 @@ import Image from "next/image";
 
 export async function getStaticPaths() {
   const paths = [];
-  const champions = require("../../public/champions.json");
+  const versions = await fetch("https://ddragon.leagueoflegends.com/api/versions.json")
+  const [atualVersion] = await versions.json()
+  const championResponse = await fetch(`http://ddragon.leagueoflegends.com/cdn/${atualVersion}/data/pt_BR/champion.json`)
+  const champions = await championResponse.json()
   Object.keys(champions.data).map((key, value) => {
     paths.push({ params: { id: key } });
   });
 
   return {
     paths: paths,
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 
@@ -33,12 +36,13 @@ export async function getStaticProps(context) {
   return {
     props: {
       champion: championData.data[id],
+      atualVersion
     },
-    revalidate: 86400
+    revalidate: 3600
   };
 }
 
-export default function Champion({ champion }) {
+export default function Champion({ champion, atualVersion }) {
   return (
     <>
       <Head>
@@ -105,7 +109,7 @@ export default function Champion({ champion }) {
               </tbody>
             </table>
           </div>
-          <Spells champion={champion} />
+          <Spells champion={champion} version={atualVersion} />
         </div>
       </main>
     </>

@@ -31,7 +31,7 @@ export async function getStaticProps() {
     props: {
       ChampionsData: justNamesAndKeys
     },
-    revalidate: 86400
+    revalidate: (60 * 60) * 1 // 1 hour
   }
 }
 
@@ -48,7 +48,6 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state.champions)
     const orderedList = this.state.champions.sort((a, b) => {
       if (a.name > b.name) return 1;
       if (a.name < b.name) return -1;
@@ -70,7 +69,6 @@ export default class Home extends Component {
       return newItem
     })
     this.setState({ champions: newList })
-    console.log(this.state.champions)
   }
 
   render() {
@@ -99,7 +97,7 @@ export default class Home extends Component {
                     <div
                       className={style.card}
                       style={{
-                        backgroundImage: `url("./images/centered/${champion.key}_0.jpg")`,
+                        backgroundImage: `url("https://ddragon.leagueoflegends.com/cdn/img/champion/centered/${champion.key}_0.jpg")`,
                         display: `${champion.view ? 'block' : 'none'}`
                       }}>
                       <div className={`${style.face} ${style.face_front}`}>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Spells({ champion }) {
+export default function Spells({ champion, version }) {
   return (
     <table className="table table-dark text-white table-striped">
       <thead>
@@ -15,7 +15,7 @@ export default function Spells({ champion }) {
           <td className="table-dark align-middle">
             <Image
               className="align-self-center rounded shadow"
-              src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/passive/${champion.passive.image.full}`}
+              src={`http://ddragon.leagueoflegends.com/cdn/${version}/img/passive/${champion.passive.image.full}`}
               width={64}
               height={64}
               alt={champion.passive.name}
@@ -32,7 +32,7 @@ export default function Spells({ champion }) {
             <td className="table-dark align-middle">
               <Image
                 className="align-self-center rounded shadow"
-                src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/${champion.spells[index].id}.png`}
+                src={`http://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${champion.spells[index].id}.png`}
                 width={64}
                 height={64}
                 alt={champion.spells[index].id}
